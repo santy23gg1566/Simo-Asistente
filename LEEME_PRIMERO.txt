@@ -1,0 +1,77 @@
+SIMO V1.0 — ASISTENTE TECNOLÓGICO PARA ANDROID Y WEB
+===================================================
+
+ESTA VEZ TU APP SE LLAMA: SIMO (appId: com.simo.voice).
+No es Simo Mask ni Simo Hub Tools; Android la instalará como aplicación nueva.
+
+1. PRUÉBALA YA, SIN INSTALAR NADA
+---------------------------------
+Abre www/index.html con Chrome.
+Puedes escribir órdenes como:
+- créame una nota que diga mañana tengo que ir al colegio
+- guarda una nota que diga recordar comprar pan
+- agrega tarea recoger un paquete
+- crea una lista llamada compras
+- añade arroz a la lista compras
+- muéstrame mis notas
+- ¿qué puedes hacer?
+- ¿qué hora es?
+- abre WhatsApp (SIMO te explicará que no tiene ese permiso)
+
+La app guarda notas, listas, tareas y conversación mediante almacenamiento local del navegador.
+El dictado por voz en web requiere navegador compatible, micrófono autorizado y, normalmente,
+HTTPS o localhost. En muchos navegadores no funciona si abres el HTML como archivo local.
+
+2. CREAR EL APK SIN ANDROID STUDIO
+---------------------------------
+A) Crea un repositorio NUEVO en https://github.com/new con nombre Simo-Asistente.
+   Es preferible NO mezclarlo con los antiguos repositorios de Simo Mask o Hub Tools.
+B) Descomprime el archivo ZIP entregado.
+C) En GitHub -> Code -> Add file -> Upload files, arrastra EL CONTENIDO del proyecto
+   (no subas el ZIP sin extraer). Incluye .github, scripts, www, assets, package.json,
+   capacitor.config.json, cloudflare-worker y este LEEME.
+D) Guarda con Commit changes.
+E) Entra en Actions -> Compilar SIMO Asistente APK. Si aparece una ejecución verde,
+   ábrela y descarga el artefacto SIMO-ASISTENTE-APK.
+F) Descomprime el artefacto y obtendrás app-debug.apk; cópialo al celular e instálalo.
+
+NOTA: Es un APK DEBUG de prueba. Al compilar otra vez, GitHub podría firmarlo
+con un certificado distinto; si Android dice «No se pudo actualizar», conserva una
+copia de tus datos (Ajustes -> Exportar copia) ANTES de desinstalar. Para actualizar
+sin reinstalar en futuras versiones hace falta una FIRMA DE RELEASE PERMANENTE.
+
+3. EDITAR CON BLOC DE NOTAS
+--------------------------
+Para cambiar pantallas, textos, colores y comandos modifica solo www/index.html.
+Haz los cambios en la copia del PC y sube el index.html actualizado a GitHub.
+El resto de archivos son la estructura de compilación nativa.
+
+4. QUE SIMO CONTESTE PREGUNTAS GENERALES
+---------------------------------------
+Sin un proveedor de IA, los comandos locales funcionan, pero SIMO NO puede responder
+libremente a cualquier pregunta. Para darle respuestas online, incluye un Worker
+para Gemini. Sus instrucciones están en GUIA_IA_CLOUDFLARE.txt.
+NO pegues tu clave privada en el HTML ni en GitHub.
+
+5. PRIVACIDAD Y LIMITACIONES
+---------------------------
+- SIMO funciona únicamente dentro de su app; no abre cualquier app ni cambia ajustes
+  del teléfono ni envía mensajes. No afirmará completar acciones que no realiza.
+- El reconocimiento de voz en la APK depende del motor de voz de Android, idioma
+  disponible y permisos; a veces el servicio también requiere internet.
+- Respuesta hablada: utiliza voz de Android o navegador si están disponibles.
+- Datos guardados localmente, NO sincronizados ni cifrados. Exporta copias periódicas.
+- No tiene avisos de alarma en segundo plano ni escucha «Hey Simo» permanente.
+- Pantalla extendida y modo inmersivo: depende de versión y controles del sistema.
+- Para un uso público, las consultas online necesitan una política de cuotas y seguridad.
+
+6. PUBLICAR LA VERSIÓN WEB
+-------------------------
+Sube los archivos de la carpeta www a Netlify o Cloudflare Pages (no el proyecto entero).
+Para PWA, necesitas HTTPS y un navegador compatible. El botón del micrófono usará
+reconocimiento web cuando esté disponible, y la APK usa el plugin nativo incluido.
+
+REQUISITOS: Ninguna licencia de pago para HTML, Capacitor o GitHub Actions dentro de
+los límites gratuitos. Las claves de IA gratuitas tienen límites de uso sujetos a cambios.
+
+SIMO no es una app de OpenAI ni de Apple. Diseño propio inspirado en interfaces futuristas.

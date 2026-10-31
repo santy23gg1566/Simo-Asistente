@@ -1,0 +1,14 @@
+{
+  "name": "simo-asistente",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SIMO - asistente personal de voz, HTML editable desde Bloc de notas, compatible con Android y web.",
+  "scripts": {"build:bridge":"esbuild scripts/native-entry.js --bundle --platform=browser --format=iife --minify --outfile=www/native-bridge.js"},
+  "dependencies": {
+    "@capacitor/core": "^8.6.0",
+    "@capacitor/android": "^8.6.0",
+    "@capgo/capacitor-speech-recognition": "^8.1.10",
+    "@capacitor-community/text-to-speech": "^8.0.2"
+  },
+  "devDependencies": {"@capacitor/cli":"^8.6.0","esbuild":"^0.25.0"}
+}

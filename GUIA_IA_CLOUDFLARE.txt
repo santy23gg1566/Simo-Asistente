@@ -1,0 +1,58 @@
+CÓMO DAR A SIMO RESPUESTAS CON IA (OPCIONAL)
+===========================================
+
+Sin este paso, las notas, las tareas, las listas, las fechas y los comandos básicos ya funcionan.
+El objetivo de este paso es que también responda preguntas generales y pueda entender
+órdenes de formas más libres.
+
+NECESITAS: Cuenta de Google AI Studio y cuenta Cloudflare (planes gratuitos sujetos a cuotas).
+
+PASO 1 — CREA TU CLAVE DE GEMINI
+Visita https://aistudio.google.com/apikey
+Crea tu clave API. Guárdala de forma privada: NO la pegues en index.html, en GitHub,
+ni la compartas. El modelo predeterminado usa gemini-2.5-flash-lite.
+
+PASO 2 — CREA TU CLOUDFLARE WORKER
+Entra a https://dash.cloudflare.com/ -> Workers & Pages -> Create -> Worker.
+Elige un nombre como simo-ai y despliega el Worker vacío.
+Entra al editor del código y REEMPLAZA su contenido por el archivo:
+   cloudflare-worker/worker.js
+Guarda y despliega. Obtendrás una dirección como:
+   https://simo-ai.TU-SUBDOMINIO.workers.dev
+
+PASO 3 — CONFIGURA SECRETOS Y VARIABLE
+En tu Worker -> Settings -> Variables and Secrets:
+  * Crea un SECRET llamado GEMINI_API_KEY con la clave privada de Google AI Studio.
+  * Crea una VARIABLE de texto llamada ALLOWED_ORIGINS con:
+    https://localhost,https://TU-DOMINIO-WEB.netlify.app
+    (sustituye el segundo origen por tu dominio web real; separa por comas).
+  * Opcional: variable GEMINI_MODEL = gemini-2.5-flash-lite
+Guarda los cambios y vuelve a desplegar si el panel lo solicita.
+
+IMPORTANTE: Android Capacitor suele utilizar el origen https://localhost.
+Si el Worker devuelve «Origen no autorizado», comprueba la variable ALLOWED_ORIGINS
+según el origen del navegador o de Android; nunca pongas una API KEY en el HTML.
+
+PASO 4 — CONECTA SIMO
+En la app SIMO -> Ajustes -> Dirección del servidor de IA, escribe la dirección
+https://simo-ai.TU-SUBDOMINIO.workers.dev -> Guardar conexión -> Probar IA.
+Si funciona, ahora SIMO puede responder preguntas online y entender comandos complejos.
+
+SEGURIDAD, CUOTAS Y EXPECTATIVAS
+- El secreto de Gemini se guarda en Cloudflare, no en el navegador ni en el APK.
+- Un Worker público puede recibir llamadas no autorizadas; CORS restringe navegadores
+  comunes, pero NO es autenticación y no detiene clientes maliciosos. Para repartir la
+  app a otras personas, configura autenticación real y rate limiting/cuotas (Cloudflare).
+- No podemos garantizar un número ilimitado de preguntas ni calidad perfecta: los
+  planes gratuitos y los modelos cambian sus límites y pueden bloquear el exceso.
+- Una pregunta de SIMO viaja a tu Worker y al proveedor de IA. Notas y tareas locales
+  no se envían al proveedor por defecto; solo se envían los textos de la conversación.
+- SIMO no dispone de acceso en directo a Google Search en este proyecto. Preguntas de
+  actualidad pueden necesitar verificación adicional.
+- Si quieres conexión solo para ti puedes restringir acceso a usuarios autenticados
+  (requiere más desarrollo) antes de publicar el enlace del Worker.
+
+ENLACES
+https://developers.cloudflare.com/workers/configuration/secrets/
+https://ai.google.dev/gemini-api/docs/pricing
+https://ai.google.dev/api/generate-content
